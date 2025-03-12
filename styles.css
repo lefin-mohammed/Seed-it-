@@ -140,27 +140,19 @@ button:hover {
     animation: drawCheck 6s infinite;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-@keyframes fadeOutDots {
-    0%, 40% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-}
-
 @keyframes tickAppear {
     0%, 50% { opacity: 0; }
     60%, 100% { opacity: 1; }
 }
 
 @keyframes drawCircle {
-    0%, 50% { stroke-dashoffset: 160; }
-    60%, 100% { stroke-dashoffset: 0; }
+    0%, 50% { stroke-dashoffset: 160; opacity: 0; }
+    60% { opacity: 1; stroke-dashoffset: 160; }
+    100% { stroke-dashoffset: 0; }
 }
 
 @keyframes drawCheck {
-    0%, 50% { stroke-dashoffset: 40; }
-    60%, 100% { stroke-dashoffset: 0; }
+    0%, 60% { stroke-dashoffset: 40; opacity: 0; }
+    70% { opacity: 1; stroke-dashoffset: 40; }
+    100% { stroke-dashoffset: 0; }
 }
