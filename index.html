@@ -10,8 +10,8 @@
 </head>
 <body>
 
-    <!-- Main Container -->
-    <div class="container">
+    <!-- 🌱 Seed It Form (Your Original Form) -->
+    <div class="container" id="form-container">
         <h2>Seed Your Savings</h2>
         <form id="seed-form">
             <input type="text" id="goal" placeholder="Enter your goal" required>
@@ -20,7 +20,7 @@
         </form>
     </div>
 
-    <!-- Transaction Complete Animation (Initially Hidden) -->
+    <!-- ✅ Transaction Complete Animation (Hidden by Default) -->
     <div class="success-container" id="success-animation" style="display: none;">
         <div class="checkmark">
             <div class="checkmark-circle"></div>
@@ -31,7 +31,7 @@
     </div>
 
     <script>
-        // Firebase Configuration
+        // 🔥 Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyArmlRMHkxHsjTiw-V-gZUxgVTG_r5xdoo",
             authDomain: "seed-it-1d329.firebaseapp.com",
@@ -47,31 +47,31 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Form Submission
+        // 📝 Form Submission Handling
         document.getElementById('seed-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
             let goal = document.getElementById('goal').value;
             let amount = document.getElementById('amount').value;
 
-            // Store data in Firebase (without displaying it on the page)
+            // ✅ Save to Firebase (Without Displaying)
             database.ref('savings').push({
                 goal: goal,
                 amount: amount
             });
 
-            // Clear form inputs
+            // 🔄 Clear Form
             document.getElementById('goal').value = "";
             document.getElementById('amount').value = "";
 
-            // Show animation
-            document.querySelector('.container').style.display = "none";
+            // 🔄 Show Animation, Hide Form
+            document.getElementById('form-container').style.display = "none";
             document.getElementById('success-animation').style.display = "block";
 
-            // Hide animation after 3 seconds
+            // ⏳ Hide Animation After 3 Seconds & Show Form Again
             setTimeout(() => {
                 document.getElementById('success-animation').style.display = "none";
-                document.querySelector('.container').style.display = "block";
+                document.getElementById('form-container').style.display = "block";
             }, 3000);
         });
     </script>
