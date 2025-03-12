@@ -1,32 +1,48 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    background-color: black;
     color: white;
+    font-family: Arial, sans-serif;
     text-align: center;
-}
-
-.container {
-    margin: auto;
-    width: 50%;
     padding: 20px;
+}
+
+/* Container */
+.container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    background-color: #222;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
+/* Input Fields */
 input {
-    display: block;
-    width: 80%;
+    width: 90%;
     padding: 10px;
-    margin: 10px auto;
-    border-radius: 5px;
+    margin: 5px 0;
     border: none;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-input[type="submit"] {
-    background-color: green;
+/* Submit Button */
+#submit {
+    background-color: #4CAF50;
     color: white;
     cursor: pointer;
+    font-weight: bold;
 }
 
-input[type="submit"]:hover {
-    background-color: darkgreen;
+#submit:hover {
+    background-color: #45a049;
+}
+
+/* Output Section */
+#output {
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
 }
