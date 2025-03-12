@@ -1,69 +1,81 @@
-/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 body {
     background-color: black;
     color: white;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
 }
 
 .container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
-}
-
-h2, h3 {
-    margin-bottom: 10px;
+    background: #1c1c1c;
+    padding: 30px;
+    border-radius: 10px; /* No blur effect */
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    width: 320px;
 }
 
 input {
-    width: 90%;
+    width: 100%;
     padding: 10px;
-    margin: 8px 0;
-    border: none;
+    margin: 10px 0;
+    border: 1px solid white;
     border-radius: 5px;
-    text-align: center;
-    background: #222;
+    background: transparent;
     color: white;
+    outline: none;
 }
 
 button {
-    background: #28a745;
-    color: white;
-    padding: 10px 15px;
+    background: #ff9900;
+    color: black;
+    padding: 10px;
     border: none;
     border-radius: 5px;
+    width: 100%;
     cursor: pointer;
-    margin-top: 10px;
-    transition: 0.3s;
+    font-size: 16px;
 }
 
 button:hover {
-    background: #218838;
+    background: #e68a00;
 }
 
-/* Success Message Animation */
+/* Success Animation */
 .hidden {
     display: none;
 }
 
-.show {
-    display: block;
-    font-size: 16px;
-    margin-top: 15px;
-    color: #28a745;
-    animation: fadeIn 0.5s ease-in-out;
+#success-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeInOut 2.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+#success-animation img {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
 }
