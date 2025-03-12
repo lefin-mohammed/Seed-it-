@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seed It</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -21,12 +22,23 @@
         <input type="number" id="amount" placeholder="eg: 50,000">
 
         <button id="submit">Seed the amount</button>
-        <p>Thank You</p>
     </div>
 
     <!-- Success Animation -->
     <div id="success-animation" class="hidden">
-        <img src="success.gif" alt="Transaction Successful">
+        <div class="loading-container">
+            <div class="outer-circle">
+                <div class="dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <svg viewBox="0 0 52 52" class="tick-icon">
+                    <circle class="circle" cx="26" cy="26" r="25" fill="none"></circle>
+                    <path class="check" d="M15 27 l7 7 l15 -15" fill="none"></path>
+                </svg>
+            </div>
+        </div>
         <p>✅ Transaction Successfully Completed</p>
     </div>
 
