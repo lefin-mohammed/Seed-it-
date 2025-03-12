@@ -1,61 +1,87 @@
-// Firebase Configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyArmlRMHkxHsjTiw-V-gZUxgVTG_r5xdoo",
-    authDomain: "seed-it-1d329.firebaseapp.com",
-    databaseURL: "https://seed-it-1d329-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "seed-it-1d329",
-    storageBucket: "seed-it-1d329.firebasestorage.app",
-    messagingSenderId: "212981636740",
-    appId: "1:212981636740:web:cc49064b6f5e93e57decd1",
-    measurementId: "G-EDLJ004ZLH"
-};
+/* General Page Styling */
+body {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+/* Container for content */
+.container {
+    width: 90%;
+    max-width: 400px;
+    background: #1e1e1e; /* Slightly lighter black */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    margin: 50px auto;
+}
 
-// Function to save data
-document.getElementById("submit").addEventListener("click", function (event) {
-    event.preventDefault(); // Stop page refresh
+/* Heading */
+h2, h3 {
+    color: #00ff99; /* Soft green */
+}
 
-    // Get user inputs
-    const username = document.querySelector("input[name='username']").value.trim();
-    const age = document.getElementById("age").value.trim();
-    const amount = document.getElementById("amount").value.trim();
+/* Input Fields */
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+}
 
-    // Validate inputs
-    if (username === "" || age === "" || amount === "") {
-        alert("Please fill in all fields!");
-        return;
-    }
+/* Placeholder Text */
+input::placeholder {
+    color: #bbb;
+}
 
-    // Save data to Firebase
-    database.ref("users").push({
-        username: username,
-        age: age,
-        amount: amount,
-        timestamp: new Date().toISOString()
-    }).then(() => {
-        showSuccessAnimation(); // Show animation
-    }).catch(error => {
-        console.error("Error:", error);
-        alert("An error occurred. Check the console.");
-    });
+/* Submit Button */
+input[type="submit"] {
+    width: 100%;
+    background-color: #00ff99; /* Green button */
+    color: #121212;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
-    // Clear input fields
-    document.querySelector("input[name='username']").value = "";
-    document.getElementById("age").value = "";
-    document.getElementById("amount").value = "";
-});
+input[type="submit"]:hover {
+    background-color: #00cc77; /* Darker green on hover */
+}
 
-// Function to show success animation
-function showSuccessAnimation() {
-    const animationDiv = document.createElement("div");
-    animationDiv.classList.add("success-animation");
-    animationDiv.innerText = "✅ Transaction Successfully Completed!";
-    document.body.appendChild(animationDiv);
+/* Thank You Text */
+p {
+    font-size: 14px;
+    color: #bbb;
+}
 
-    setTimeout(() => {
-        animationDiv.remove();
-    }, 3000);
+/* Success Animation */
+.success-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 255, 0, 0.9);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+    animation: fadeOut 3s ease-in-out;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
 }
