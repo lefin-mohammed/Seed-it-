@@ -1,87 +1,55 @@
-/* General Page Styling */
-body {
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* White text */
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
 
-/* Container for content */
-.container {
-    width: 90%;
-    max-width: 400px;
-    background: #1e1e1e; /* Slightly lighter black */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    margin: 50px auto;
-}
+// Firebase Configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "https://seed-it-1d329-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "seed-it-1d329",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-/* Heading */
-h2, h3 {
-    color: #00ff99; /* Soft green */
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
-/* Input Fields */
-input[type="text"], input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 5px;
-    background: #333;
-    color: white;
-    font-size: 16px;
-}
+// Function to save data to Firebase
+document.getElementById("submit").addEventListener("click", function(event) {
+    event.preventDefault();
 
-/* Placeholder Text */
-input::placeholder {
-    color: #bbb;
-}
+    // Get user input values
+    const username = document.getElementById("username").value.trim();
+    const age = document.getElementById("age").value.trim();
+    const amount = document.getElementById("amount").value.trim();
+    const successMessage = document.getElementById("success-message");
 
-/* Submit Button */
-input[type="submit"] {
-    width: 100%;
-    background-color: #00ff99; /* Green button */
-    color: #121212;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+    if (!username || !age || !amount) {
+        alert("Please fill in all fields!");
+        return;
+    }
 
-input[type="submit"]:hover {
-    background-color: #00cc77; /* Darker green on hover */
-}
+    // Save data to Firebase
+    const userRef = ref(database, "users/" + username);
+    set(userRef, {
+        username: username,
+        age: age,
+        amount: amount,
+        timestamp: new Date().toISOString()
+    }).then(() => {
+        successMessage.classList.remove("hidden");
+        successMessage.classList.add("show");
 
-/* Thank You Text */
-p {
-    font-size: 14px;
-    color: #bbb;
-}
-
-/* Success Animation */
-.success-animation {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 255, 0, 0.9);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-    animation: fadeOut 3s ease-in-out;
-}
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-}
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+            successMessage.classList.remove("show");
+            successMessage.classList.add("hidden");
+        }, 3000);
+    }).catch(error => {
+        console.error("Error:", error);
+        alert("Failed to save data.");
+    });
+});
