@@ -3,31 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seed It - Save Smartly</title>
+    <title>Seed It</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-app.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-database.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-
-    <!-- 🌱 Seed It Form (Your Original Version) -->
     <div class="container">
-        <h2>Seed Your Savings</h2>
-        <form id="seed-form">
-            <input type="text" id="goal" placeholder="Enter your goal" required>
-            <input type="number" id="amount" placeholder="Enter amount" required>
-            <button type="submit" id="seed-button">Seed It</button>
-        </form>
+        <h2>Welcome to Seed It</h2>
+        <h3>India's Only Financial Ecosystem</h3>
+
+        <p>Enter your Name</p>
+        <input type="text" id="username" placeholder="eg: Lefin">
+
+        <p>Enter your Age</p>
+        <input type="number" id="age" placeholder="eg: 18">
+
+        <p>Enter the amount you want to save</p>
+        <input type="number" id="amount" placeholder="eg: 50,000">
+
+        <button id="submit">Seed the amount</button>
     </div>
 
-    <!-- 🔄 List to Show Stored Data -->
-    <div class="list-container">
-        <h2>Saved Goals</h2>
-        <ul id="savings-list"></ul>
+    <!-- Success Animation -->
+    <div id="success-animation" class="hidden">
+        <div class="loading-container">
+            <div class="outer-circle">
+                <div class="dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <svg viewBox="0 0 52 52" class="tick-icon">
+                    <circle class="circle" cx="26" cy="26" r="25" fill="none"></circle>
+                    <path class="check" d="M15 27 l7 7 l15 -15" fill="none"></path>
+                </svg>
+            </div>
+        </div>
+        <p>✅ Transaction Successfully Completed</p>
     </div>
 
-    <script>
-        // 🔥 Firebase Configuration
+    <!-- Firebase Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyArmlRMHkxHsjTiw-V-gZUxgVTG_r5xdoo",
             authDomain: "seed-it-1d329.firebaseapp.com",
@@ -39,39 +58,45 @@
             measurementId: "G-EDLJ004ZLH"
         };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-        // 📝 Form Submission Handling
-        document.getElementById('seed-form').addEventListener('submit', function(event) {
+        document.getElementById("submit").addEventListener("click", function(event) {
             event.preventDefault();
 
-            let goal = document.getElementById('goal').value;
-            let amount = document.getElementById('amount').value;
+            const username = document.getElementById("username").value.trim();
+            const age = document.getElementById("age").value.trim();
+            const amount = document.getElementById("amount").value.trim();
 
-            // ✅ Save to Firebase
-            let newEntry = database.ref('savings').push();
-            newEntry.set({
-                goal: goal,
-                amount: amount
+            if (!username || !age || !amount) {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            const userRef = ref(database, "users/" + username);
+            set(userRef, {
+                username: username,
+                age: age,
+                amount: amount,
+                timestamp: new Date().toISOString()
+            })
+            .then(() => {
+                const successAnimation = document.getElementById("success-animation");
+                successAnimation.classList.remove("hidden");
+
+                setTimeout(() => {
+                    successAnimation.classList.add("hidden");
+                }, 2500);
+
+                document.getElementById("username").value = "";
+                document.getElementById("age").value = "";
+                document.getElementById("amount").value = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Failed to save data.");
             });
-
-            // 🔄 Clear Form
-            document.getElementById('goal').value = "";
-            document.getElementById('amount').value = "";
-        });
-
-        // 🔄 Display Data from Firebase
-        const savingsList = document.getElementById('savings-list');
-
-        database.ref('savings').on('child_added', function(snapshot) {
-            let data = snapshot.val();
-            let li = document.createElement('li');
-            li.textContent = `${data.goal} - ₹${data.amount}`;
-            savingsList.appendChild(li);
         });
     </script>
-
 </body>
 </html>
