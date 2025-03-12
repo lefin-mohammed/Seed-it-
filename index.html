@@ -10,8 +10,8 @@
 </head>
 <body>
 
-    <!-- 🌱 Seed It Form (Your Original Form) -->
-    <div class="container" id="form-container">
+    <!-- 🌱 Seed It Form (Your Original Version) -->
+    <div class="container">
         <h2>Seed Your Savings</h2>
         <form id="seed-form">
             <input type="text" id="goal" placeholder="Enter your goal" required>
@@ -20,14 +20,10 @@
         </form>
     </div>
 
-    <!-- ✅ Transaction Complete Animation (Hidden by Default) -->
-    <div class="success-container" id="success-animation" style="display: none;">
-        <div class="checkmark">
-            <div class="checkmark-circle"></div>
-            <div class="checkmark-stem"></div>
-            <div class="checkmark-kick"></div>
-        </div>
-        <p class="message">Transaction Complete!</p>
+    <!-- 🔄 List to Show Stored Data -->
+    <div class="list-container">
+        <h2>Saved Goals</h2>
+        <ul id="savings-list"></ul>
     </div>
 
     <script>
@@ -54,8 +50,9 @@
             let goal = document.getElementById('goal').value;
             let amount = document.getElementById('amount').value;
 
-            // ✅ Save to Firebase (Without Displaying)
-            database.ref('savings').push({
+            // ✅ Save to Firebase
+            let newEntry = database.ref('savings').push();
+            newEntry.set({
                 goal: goal,
                 amount: amount
             });
@@ -63,16 +60,16 @@
             // 🔄 Clear Form
             document.getElementById('goal').value = "";
             document.getElementById('amount').value = "";
+        });
 
-            // 🔄 Show Animation, Hide Form
-            document.getElementById('form-container').style.display = "none";
-            document.getElementById('success-animation').style.display = "block";
+        // 🔄 Display Data from Firebase
+        const savingsList = document.getElementById('savings-list');
 
-            // ⏳ Hide Animation After 3 Seconds & Show Form Again
-            setTimeout(() => {
-                document.getElementById('success-animation').style.display = "none";
-                document.getElementById('form-container').style.display = "block";
-            }, 3000);
+        database.ref('savings').on('child_added', function(snapshot) {
+            let data = snapshot.val();
+            let li = document.createElement('li');
+            li.textContent = `${data.goal} - ₹${data.amount}`;
+            savingsList.appendChild(li);
         });
     </script>
 
