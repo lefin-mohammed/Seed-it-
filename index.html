@@ -6,7 +6,7 @@
     <title>Seed It</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body bgcolor="black">
+<body>
     <div class="container">
         <h2>Welcome to Seed It</h2>
         <h3>India's Only Financial Ecosystem</h3>
@@ -18,22 +18,23 @@
         <input type="number" id="age" placeholder="eg: 18">
 
         <p>Enter the amount you want to save</p>
-        <input type="number" id="amount" placeholder="eg: 50,000">
+        <input type="number" id="amount" placeholder="eg: 50000">
 
         <button id="submit">Seed the amount</button>
+    </div>
 
-        <div id="output"></div>
-
-        <p>Thank You</p>
+    <!-- Success Message (Hidden by Default) -->
+    <div id="success-message" class="success-animation" style="display: none;">
+        ✅ Transaction Successfully Completed!
     </div>
 
     <!-- Firebase Integration -->
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
 
-        // Firebase Configuration (Replace placeholders with actual values from Firebase)
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -48,11 +49,11 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Function to save data to Firebase
+        // Function to save data
         document.getElementById("submit").addEventListener("click", function(event) {
             event.preventDefault();  // Prevent page refresh
 
-            // Get user input values
+            // Get user input
             const username = document.getElementById("username").value.trim();
             const age = document.getElementById("age").value.trim();
             const amount = document.getElementById("amount").value.trim();
@@ -62,7 +63,7 @@
                 return;
             }
 
-            // Save data to Firebase under 'users' collection
+            // Save data to Firebase
             const userRef = ref(database, "users/" + username);
             set(userRef, {
                 username: username,
@@ -70,36 +71,17 @@
                 amount: amount,
                 timestamp: new Date().toISOString()
             }).then(() => {
-                alert("Data saved successfully!");
-                loadData(); // Refresh displayed data
+                // Show success animation
+                const successMessage = document.getElementById("success-message");
+                successMessage.style.display = "block";
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 3000);
             }).catch(error => {
                 console.error("Error:", error);
                 alert("Failed to save data.");
             });
         });
-
-        // Function to load and display saved data
-        function loadData() {
-            const usersRef = ref(database, "users/");
-            get(usersRef).then(snapshot => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    const outputDiv = document.getElementById("output");
-                    outputDiv.innerHTML = "<h3>Saved Data:</h3>";
-
-                    Object.values(data).forEach(user => {
-                        outputDiv.innerHTML += `<p>🟢 <strong>${user.username}</strong> | Age: ${user.age} | Amount: ₹${user.amount}</p>`;
-                    });
-                } else {
-                    console.log("No data available.");
-                }
-            }).catch(error => {
-                console.error("Error fetching data:", error);
-            });
-        }
-
-        // Load data when page loads
-        window.onload = loadData;
     </script>
 </body>
 </html>
