@@ -1,82 +1,69 @@
-/* General Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
+/* General Styling */
 body {
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* White text */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Container */
-.container {
-    background: #1e1e1e; /* Slightly lighter dark */
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-    width: 350px;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
     text-align: center;
+    padding: 20px;
 }
 
-/* Headings */
+.container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
 h2, h3 {
-    font-weight: bold;
     margin-bottom: 10px;
 }
 
-/* Input Fields */
-input[type="text"],
-input[type="number"] {
-    width: 100%;
+input {
+    width: 90%;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #444;
-    border-radius: 6px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
     background: #222;
     color: white;
 }
 
-/* Submit Button */
-#submit {
-    width: 100%;
-    padding: 10px;
-    background-color: #00C853; /* Bright green */
-    border: none;
-    border-radius: 6px;
+button {
+    background: #28a745;
     color: white;
-    font-size: 16px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
     transition: 0.3s;
 }
 
-#submit:hover {
-    background-color: #009624;
+button:hover {
+    background: #218838;
 }
 
-/* Success Animation */
-.success-animation {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 255, 0, 0.9);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-    animation: fadeOut 3s ease-in-out;
+/* Success Message Animation */
+.hidden {
+    display: none;
 }
 
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
+.show {
+    display: block;
+    font-size: 16px;
+    margin-top: 15px;
+    color: #28a745;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
