@@ -1,65 +1,166 @@
-/* 🌱 Simple Form Styling */
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
 
+body {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
 .container {
+    background: #1c1c1c;
+    padding: 30px;
+    border-radius: 10px; /* No blur effect */
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
     text-align: center;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    width: 320px;
 }
 
 input {
-    display: block;
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    border: 1px solid white;
     border-radius: 5px;
+    background: transparent;
+    color: white;
+    outline: none;
 }
 
 button {
-    background: #4CAF50;
-    color: white;
-    border: none;
+    background: #ff9900;
+    color: black;
     padding: 10px;
+    border: none;
+    border-radius: 5px;
     width: 100%;
     cursor: pointer;
-    border-radius: 5px;
+    font-size: 16px;
 }
 
 button:hover {
-    background: #45a049;
+    background: #e68a00;
 }
 
-/* 🔄 Saved Goals List */
-.list-container {
-    background: white;
+/* Success Animation */
+.hidden {
+    display: none;
+}
+
+#success-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    border-radius: 10px;
     text-align: center;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+/* Loading Animation */
+.loading-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
 }
 
-li {
-    background: #e0e0e0;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
+.outer-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #d4ebff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    animation: colorChange 6s infinite;
+}
+
+.dots {
+    display: flex;
+    justify-content: space-between;
+    width: 40px;
+    position: absolute;
+    opacity: 1;
+    animation: fadeOutDots 6s infinite;
+}
+
+.dots span {
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    border-radius: 50%;
+    animation: bounce 1s infinite;
+}
+
+.dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.tick-icon {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    opacity: 0;
+    animation: tickAppear 6s infinite, tickDraw 6s infinite;
+}
+
+.tick-icon .circle {
+    stroke-width: 3px;
+    stroke-dashoffset: 160;
+    stroke-dasharray: 160;
+    stroke: #d4ffdd;
+    animation: drawCircle 6s infinite;
+}
+
+.tick-icon .check {
+    stroke: #228B22;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: drawCheck 6s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeOutDots {
+    0%, 40% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+@keyframes tickAppear {
+    0%, 50% { opacity: 0; }
+    60%, 100% { opacity: 1; }
+}
+
+@keyframes drawCircle {
+    0%, 50% { stroke-dashoffset: 160; }
+    60%, 100% { stroke-dashoffset: 0; }
+}
+
+@keyframes drawCheck {
+    0%, 50% { stroke-dashoffset: 40; }
+    60%, 100% { stroke-dashoffset: 0; }
 }
